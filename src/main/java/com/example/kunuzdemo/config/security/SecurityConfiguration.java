@@ -45,7 +45,7 @@ public class SecurityConfiguration {
             "api/v1/auth/sign-up",
             "api/v1/auth/verify",
             "api/v1/auth/new-verification-code",
-            "api/v1/auth/sing-in",
+            "api/v1/auth/sign-in",
             "/v3/api-docs/**",
             "/v3/api-docs.yml",
             "/swagger-ui/**",

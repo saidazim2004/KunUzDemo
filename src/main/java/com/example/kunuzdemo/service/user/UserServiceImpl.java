@@ -4,14 +4,18 @@ import com.example.kunuzdemo.dtos.request.ChangeRoleDTO;
 import com.example.kunuzdemo.dtos.request.UserUpdateProfileDTO;
 import com.example.kunuzdemo.dtos.response.UserResponseDTO;
 import com.example.kunuzdemo.entity.UserEntity;
+import com.example.kunuzdemo.exceptions.DataNotFoundException;
+import com.example.kunuzdemo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
+    private final UserRepository userRepository ;
     @Override
     public UserEntity getUserByID(UUID userID) {
         return null;
@@ -24,7 +28,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserEntity getUserByEmail(String email) {
-        return null;
+
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        if(user.isEmpty()){
+            throw new DataNotFoundException("User not found with Email: " + email);
+        }
+        else {
+            return user.get();
+        }
     }
 
     @Override
