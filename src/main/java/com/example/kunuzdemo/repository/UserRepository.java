@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<UserEntity , UUID> {
     @Query("select u from users u where  u.email=:email and not u.deleted")
     Optional<UserEntity> findByEmail(String email);
+
+    boolean existsUserByEmail(String email);
 }
