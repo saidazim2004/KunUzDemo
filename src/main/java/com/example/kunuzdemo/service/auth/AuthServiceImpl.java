@@ -1,8 +1,10 @@
 package com.example.kunuzdemo.service.auth;
 
 import com.example.kunuzdemo.config.jwt.JwtService;
+import com.example.kunuzdemo.dtos.request.LoginDTO;
 import com.example.kunuzdemo.dtos.request.UserCreateDto;
 import com.example.kunuzdemo.dtos.response.AuthResponseDTO;
+import com.example.kunuzdemo.dtos.response.TokenDTO;
 import com.example.kunuzdemo.dtos.response.UserResponseDTO;
 import com.example.kunuzdemo.entity.UserEntity;
 import com.example.kunuzdemo.entity.VerificationData;
@@ -17,6 +19,7 @@ import com.example.kunuzdemo.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +81,8 @@ public class AuthServiceImpl implements AuthService {
         return new VerificationData(verificationCode, LocalDateTime.now());
     }
 
+
+
     @Override
     public String verify(String email, String verificationCode) {
         UserEntity user = userMap.get(email);
@@ -95,4 +100,48 @@ public class AuthServiceImpl implements AuthService {
             throw new BadRequestException("Verification code expired");
         return !Objects.equals(verificationData.getVerificationCode(), verificationCode);
     }
+
+
+
+    @Override
+    public String newVerifyCode(String email) {
+        UserEntity user = userService.getUserByEmail(email);
+        if (user != null) {
+            user.setVerificationData(generateVerificationData());
+            userRepository.save(user);
+            return mailSenderService.sendVerificationCode(email, user.getVerificationData().getVerificationCode());
+        } else {
+            UserEntity mapUser = userMap.get(email);
+            mapUser.setVerificationData(generateVerificationData());
+            return mailSenderService.sendVerificationCode(email, mapUser.getVerificationData().getVerificationCode());
+        }
+
+    }
+
+    @Override
+    public TokenDTO signIn(LoginDTO loginDTO) {
+        UserEntity user = getActiveUserByEmail(loginDTO.getEmail());
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())){
+            throw new UserPasswordWrongException("User password wrong with Password: " + loginDTO.getPassword());
+        }
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.getEmail(),
+                        loginDTO.getPassword()
+                )
+        );
+        return jwtService.generateToken(user.getEmail());
+    }
+
+    private UserEntity getActiveUserByEmail(String email) {
+        UserEntity user = userService.getUserByEmail(email);
+        if (user.getStatus().equals(UserStatus.UNVERIFIED)) {
+            throw new BadRequestException("User unverified");
+        }
+        return user;
+
+    }
+
 }
