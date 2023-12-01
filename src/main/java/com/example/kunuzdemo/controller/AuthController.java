@@ -6,12 +6,10 @@ import com.example.kunuzdemo.dtos.response.AuthResponseDTO;
 import com.example.kunuzdemo.dtos.response.TokenDTO;
 import com.example.kunuzdemo.dtos.response.UserResponseDTO;
 import com.example.kunuzdemo.dtos.response.VerifyDTO;
-import com.example.kunuzdemo.entity.UserEntity;
-import com.example.kunuzdemo.service.auth.AuthService;
 import com.example.kunuzdemo.service.auth.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
