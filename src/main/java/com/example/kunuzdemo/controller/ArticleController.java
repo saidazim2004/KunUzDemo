@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,10 +30,19 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(articleResponseDTO);
     }
 
-    @PostMapping("/get-by-id")
+    @GetMapping("/get-by-id")
     public ResponseEntity<ArticleResponseDto> getById(@RequestParam UUID articleId){
         ArticleResponseDto articleResponseDto = articleService.getById(articleId);
         return ResponseEntity.ok(articleResponseDto);
+    }
+
+    @GetMapping("/get-by-language")
+    public ResponseEntity<List<ArticleResponseDto>> geArticlesByLanguage(@RequestParam String language ,
+                                                                         @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                         @RequestParam(required = false, defaultValue = "10") Integer size){
+        List<ArticleResponseDto> articleResponseDtos = articleService.getByLanguage(language , page , size);
+
+        return ResponseEntity.ok(articleResponseDtos);
     }
 
 }

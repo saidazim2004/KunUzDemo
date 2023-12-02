@@ -3,6 +3,7 @@ package com.example.kunuzdemo.service.article;
 import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ArticleService {
@@ -10,4 +11,5 @@ public interface ArticleService {
 
     ArticleResponseDto getById(UUID articleId);
 
+    List<ArticleResponseDto> getByLanguage(String language, Integer page, Integer size);
 }
