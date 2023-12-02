@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private Map<String, UserEntity> userMap = new HashMap<>();
+    private final Map<String, UserEntity> userMap = new HashMap<>();
     @Override
     public AuthResponseDTO<UserResponseDTO> create(UserCreateDto userCreateDto) {
         checkEmailUnique(userCreateDto.getEmail());
