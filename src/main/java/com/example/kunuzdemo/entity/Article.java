@@ -2,7 +2,7 @@ package com.example.kunuzdemo.entity;
 
 import com.example.kunuzdemo.enums.ArticleStatus;
 import com.example.kunuzdemo.enums.Language;
-import com.example.kunuzdemo.entity.UserEntity;
+
 import jakarta.persistence.*;
 import lombok.*;
 

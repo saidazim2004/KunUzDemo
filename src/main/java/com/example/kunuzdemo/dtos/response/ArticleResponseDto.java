@@ -1,13 +1,10 @@
 package com.example.kunuzdemo.dtos.response;
 
-import com.example.kunuzdemo.entity.*;
-import com.example.kunuzdemo.enums.ArticleStatus;
-import com.example.kunuzdemo.enums.Language;
-import jakarta.persistence.*;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor

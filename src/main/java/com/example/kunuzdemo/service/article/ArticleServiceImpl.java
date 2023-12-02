@@ -6,7 +6,6 @@ import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.entity.*;
 import com.example.kunuzdemo.repository.ArticleRepository;
 import com.example.kunuzdemo.service.category.CategoryService;
-import com.example.kunuzdemo.service.mail.MailSenderService;
 import com.example.kunuzdemo.service.media.MediaService;
 import com.example.kunuzdemo.service.region.RegionService;
 import com.example.kunuzdemo.service.user.UserService;
