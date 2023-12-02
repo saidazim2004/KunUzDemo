@@ -17,8 +17,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository ;
     @Override
-    public UserEntity getUserByID(UUID userID) {
-        return null;
+    public UserEntity getUserByID(UUID id) {
+        return userRepository.getUserEntityById(id);
     }
 
     @Override

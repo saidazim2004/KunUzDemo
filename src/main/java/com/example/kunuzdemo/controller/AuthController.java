@@ -1,6 +1,8 @@
 package com.example.kunuzdemo.controller;
 
 import com.example.kunuzdemo.dtos.request.LoginDTO;
+import com.example.kunuzdemo.dtos.request.ResetPasswordDto;
+import com.example.kunuzdemo.dtos.request.UpdatePasswordDto;
 import com.example.kunuzdemo.dtos.request.UserCreateDto;
 import com.example.kunuzdemo.dtos.response.AuthResponseDTO;
 import com.example.kunuzdemo.dtos.response.TokenDTO;
@@ -8,6 +10,7 @@ import com.example.kunuzdemo.dtos.response.UserResponseDTO;
 import com.example.kunuzdemo.dtos.response.VerifyDTO;
 import com.example.kunuzdemo.service.auth.AuthServiceImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -46,5 +49,25 @@ public class AuthController {
     public ResponseEntity<TokenDTO> signIn(@Valid @RequestBody LoginDTO loginDTO){
         TokenDTO tokenDTO = authService.signIn(loginDTO);
         return ResponseEntity.ok(tokenDTO);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam @Email String email){
+        String response = authService.forgotPassword(email);
+        return ResponseEntity.ok(response);
+
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordDto resetPassword){
+
+        String response = authService.resetPassword(resetPassword);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
+        String response = authService.updatePassword(updatePasswordDto);
+        return ResponseEntity.ok(response);
     }
 }
