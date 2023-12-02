@@ -1,6 +1,8 @@
 package com.example.kunuzdemo.service.auth;
 
 import com.example.kunuzdemo.dtos.request.LoginDTO;
+import com.example.kunuzdemo.dtos.request.ResetPasswordDto;
+import com.example.kunuzdemo.dtos.request.UpdatePasswordDto;
 import com.example.kunuzdemo.dtos.request.UserCreateDto;
 import com.example.kunuzdemo.dtos.response.AuthResponseDTO;
 import com.example.kunuzdemo.dtos.response.TokenDTO;
@@ -13,4 +15,11 @@ public interface AuthService {
     String newVerifyCode(String email);
 
     TokenDTO signIn(LoginDTO loginDTO);
+
+    String forgotPassword(String email);
+    String resetPassword(ResetPasswordDto resetPasswordDto);
+
+    String updatePassword(UpdatePasswordDto updatePasswordDto);
+
+
 }
