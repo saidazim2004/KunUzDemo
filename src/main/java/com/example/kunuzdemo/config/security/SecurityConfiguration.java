@@ -49,6 +49,7 @@ public class SecurityConfiguration {
             "api/v1/auth/forgot-password",
             "api/v1/auth/reset-password",
             "api/v1/auth/update-password",
+            "api/v1/article/get-by-id",
             "/v3/api-docs/**",
             "/v3/api-docs.yml",
             "/swagger-ui/**",
