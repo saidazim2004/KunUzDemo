@@ -2,7 +2,7 @@ package com.example.kunuzdemo.entity;
 
 import com.example.kunuzdemo.enums.ArticleStatus;
 import com.example.kunuzdemo.enums.Language;
-import com.example.kunuzdemo.entity.UserEntity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,29 +16,36 @@ import java.util.List;
 @Builder
 
 public class Article extends BaseEntity {
+
     @Column(nullable = false)
-    private String title ;
+    private String title;
+
     @Column(nullable = false, columnDefinition = "text")
-    private String description ;
+    private String description;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "created_by")
-    private UserEntity createBy ;
+    private UserEntity createdBy;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Media media ;
+    private Media media;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
-    private Region region ;
+    private Region region;
+
     @ManyToOne
     @JoinColumn(nullable = false, name = "category_id")
-    private Category category ;
+    private Category category;
+
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.CREATED;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Language language ;
+    private Language language;
+
     private LocalDateTime publishedDate;
 
     private Double viewCount = 0D;
