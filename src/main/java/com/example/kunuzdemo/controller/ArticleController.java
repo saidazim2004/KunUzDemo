@@ -69,4 +69,13 @@ public class ArticleController {
         ArticleResponseDto articleResponseDto = articleService.changeArticleStatus(articleId);
         return ResponseEntity.ok(articleResponseDto);
     }
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @GetMapping("/get-by-publisher")
+    public ResponseEntity<List<ArticleResponseDto>> getByPublisher( @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                    @RequestParam(required = false, defaultValue = "10") Integer size) {
+        List<ArticleResponseDto> articleResponseDtos = articleService.getByPublisher(page , size);
+        return ResponseEntity.ok(articleResponseDtos);
+    }
 }

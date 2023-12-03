@@ -19,4 +19,7 @@ public interface ArticleService {
 
     ArticleResponseDto changeArticleStatus(UUID articleId);
 
+    List<ArticleResponseDto> getByPublisher(Integer page, Integer size);
+
+
 }

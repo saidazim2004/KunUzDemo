@@ -101,6 +101,7 @@ public class ArticleServiceImpl implements ArticleService {
         return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType()) ;
     }
 
+
     @Override
     public ArticleResponseDto changeArticleStatus(UUID articleId) {
 
@@ -115,4 +116,9 @@ public class ArticleServiceImpl implements ArticleService {
         return modelMapper.map(articleById.get() , ArticleResponseDto.class);
     }
 
+    @Override
+    public List<ArticleResponseDto> getByPublisher(Integer page, Integer size) {
+        return modelMapper.map(articleRepository.findByPublished(PageRequest.of(page,size)).getContent(), new TypeToken<List<ArticleResponseDto>>(){}.getType());
+
+    }
 }

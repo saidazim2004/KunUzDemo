@@ -5,6 +5,7 @@ import com.example.kunuzdemo.entity.Article;
 import com.example.kunuzdemo.enums.Language;
 import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,6 @@ public interface ArticleRepository extends JpaRepository<Article , UUID> {
     Page<Article> getByTitle(@Param("title") String title, Pageable pageable);
 
 
+    @Query(value = "from article a where a.status = 'PUBLISHED' and not a.deleted")
+    Page<Article> findByPublished(Pageable pageable);
 }
