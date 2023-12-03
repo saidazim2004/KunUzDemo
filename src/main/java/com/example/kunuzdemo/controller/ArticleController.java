@@ -78,4 +78,28 @@ public class ArticleController {
         List<ArticleResponseDto> articleResponseDtos = articleService.getByPublisher(page , size);
         return ResponseEntity.ok(articleResponseDtos);
     }
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @GetMapping("/get-all-blocked")
+    public ResponseEntity<List<ArticleResponseDto>> getAllUnVisible(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer size
+    ) {
+        return ResponseEntity.ok(articleService.getAllBlocked(page, size));
+    }
+
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @GetMapping("/get-by-region")
+    public ResponseEntity<List<ArticleResponseDto>> getByRegion(@RequestParam UUID regionID,
+                                                                @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                @RequestParam(required = false, defaultValue = "10") Integer size){
+
+        System.out.println("REGION ID "+regionID);
+        List<ArticleResponseDto> byRegionId = articleService.getByRegionId(regionID, page, size);
+        return ResponseEntity.ok(byRegionId);
+    }
+
 }

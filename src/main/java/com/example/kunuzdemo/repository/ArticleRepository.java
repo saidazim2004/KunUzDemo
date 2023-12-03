@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
+import java.net.ContentHandler;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,4 +34,15 @@ public interface ArticleRepository extends JpaRepository<Article , UUID> {
 
     @Query(value = "from article a where a.status = 'PUBLISHED' and not a.deleted")
     Page<Article> findByPublished(Pageable pageable);
+
+
+    @Query(value = "from article a where a.status = 'BLOCKED'")
+    Page<Article> findArticleByStatusBlocked(Pageable pageable);
+
+
+
+
+    @Query(value = "from article a where not a.deleted and a.region.id =:regionID and a.region.visible = true ")
+    Page<Article> findArticleByRegion(@Param("regionID")UUID regionID, Pageable pageable);
+
 }
