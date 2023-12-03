@@ -116,9 +116,23 @@ public class ArticleServiceImpl implements ArticleService {
         return modelMapper.map(articleById.get() , ArticleResponseDto.class);
     }
 
+
     @Override
     public List<ArticleResponseDto> getByPublisher(Integer page, Integer size) {
         return modelMapper.map(articleRepository.findByPublished(PageRequest.of(page,size)).getContent(), new TypeToken<List<ArticleResponseDto>>(){}.getType());
 
+    }
+
+
+
+    @Override
+    public List<ArticleResponseDto> getAllBlocked(Integer page, Integer size) {
+        return modelMapper.map(articleRepository.findArticleByStatusBlocked(PageRequest.of(page, size)).getContent(),
+                new TypeToken<List<ArticleResponseDto>>() {}.getType());
+    }
+
+    @Override
+    public List<ArticleResponseDto> getByRegionId(UUID regionID, Integer page, Integer size) {
+        return  modelMapper.map(articleRepository.findArticleByRegion(regionID , PageRequest.of(page,size)).getContent() , new TypeToken<List<ArticleResponseDto>>(){}.getType());
     }
 }

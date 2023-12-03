@@ -22,4 +22,7 @@ public interface ArticleService {
     List<ArticleResponseDto> getByPublisher(Integer page, Integer size);
 
 
+    List<ArticleResponseDto> getAllBlocked(Integer page, Integer size);
+
+    List<ArticleResponseDto> getByRegionId(UUID regionID, Integer page, Integer size);
 }
