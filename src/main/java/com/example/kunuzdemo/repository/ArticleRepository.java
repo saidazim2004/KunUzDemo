@@ -16,4 +16,7 @@ public interface ArticleRepository extends JpaRepository<Article , UUID> {
 
     @Query("from article a where a.language =:language and a.status = 'PUBLISHED' and not a.deleted")
     Page<Article> findByLanguage(Language language, Pageable pageable);
+
+    @Query("from article a where a.status = 'PUBLISHED' and not a.deleted order by a.viewCount DESC")
+    Page<Article> findRecommendedArticles(Pageable pageable);
 }
