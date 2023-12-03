@@ -52,4 +52,21 @@ public class ArticleController {
         return ResponseEntity.ok(articleResponseDtos);
     }
 
+
+
+    @GetMapping("/get-by-title")
+    public ResponseEntity<List<ArticleResponseDto>> getByTitle(@RequestParam String titleName,
+                                                         @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                         @RequestParam(required = false, defaultValue = "10") Integer size) {
+
+        List<ArticleResponseDto> articleResponseDtos = articleService.getByTitle(titleName , page , size);
+        return ResponseEntity.ok(articleResponseDtos);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'PUBLISHER')")
+    @PostMapping("/change-article-status-published")
+    public ResponseEntity<ArticleResponseDto> changeArticleStatus(@RequestParam UUID articleId){
+        ArticleResponseDto articleResponseDto = articleService.changeArticleStatus(articleId);
+        return ResponseEntity.ok(articleResponseDto);
+    }
 }
