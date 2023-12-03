@@ -14,4 +14,9 @@ public interface ArticleService {
     List<ArticleResponseDto> getByLanguage(String language, Integer page, Integer size);
 
     List<ArticleResponseDto> findRecommendedArticles(Integer page, Integer size);
+
+    List<ArticleResponseDto> getByTitle(String titleName, Integer page, Integer size);
+
+    ArticleResponseDto changeArticleStatus(UUID articleId);
+
 }

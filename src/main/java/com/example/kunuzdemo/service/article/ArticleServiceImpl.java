@@ -4,6 +4,7 @@ import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
 import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.entity.*;
+import com.example.kunuzdemo.enums.ArticleStatus;
 import com.example.kunuzdemo.enums.Language;
 import com.example.kunuzdemo.exceptions.DataNotFoundException;
 import com.example.kunuzdemo.repository.ArticleRepository;
@@ -17,6 +18,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -81,12 +83,36 @@ public class ArticleServiceImpl implements ArticleService {
         return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType());
     }
 
+
+
     @Override
     public List<ArticleResponseDto> findRecommendedArticles(Integer page, Integer size) {
 
         List<Article> articles = articleRepository.findRecommendedArticles(PageRequest.of(page,size)).getContent();
         return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType());
 
+    }
+
+
+    @Override
+    public List<ArticleResponseDto> getByTitle(String titleName, Integer page, Integer size) {
+
+        List<Article>articles = articleRepository.getByTitle(titleName ,  PageRequest.of(page,size)).getContent();
+        return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType()) ;
+    }
+
+    @Override
+    public ArticleResponseDto changeArticleStatus(UUID articleId) {
+
+        Optional<Article> articleById = articleRepository.getArticleById(articleId);
+        articleById.get().setStatus(ArticleStatus.PUBLISHED);
+
+        if (articleById.get().getStatus().equals(ArticleStatus.PUBLISHED)){
+            articleById.get().setPublishedDate(LocalDateTime.now());
+        }
+        articleRepository.save(articleById.get());
+
+        return modelMapper.map(articleById.get() , ArticleResponseDto.class);
     }
 
 }
