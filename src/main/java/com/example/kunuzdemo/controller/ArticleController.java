@@ -45,4 +45,11 @@ public class ArticleController {
         return ResponseEntity.ok(articleResponseDtos);
     }
 
+    @GetMapping("/get-recommended-articles")
+    public ResponseEntity<List<ArticleResponseDto>> findRecommendedArticles(@RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                            @RequestParam(required = false, defaultValue = "10") Integer size){
+        List<ArticleResponseDto> articleResponseDtos = articleService.findRecommendedArticles(page,size);
+        return ResponseEntity.ok(articleResponseDtos);
+    }
+
 }

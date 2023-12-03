@@ -70,12 +70,23 @@ public class ArticleServiceImpl implements ArticleService {
             return modelMapper.map(articleById.get(), ArticleResponseDto.class);
         }
     }
+
+
+
     @Override
     public List<ArticleResponseDto> getByLanguage(String language, Integer page, Integer size) {
-        List<Article> articleResponseDtos =
+        List<Article> articles =
                 articleRepository.findByLanguage(Language.valueOf(language), PageRequest.of(page,size))
                         .getContent();
-        return modelMapper.map(articleResponseDtos , new TypeToken<List<ArticleResponseDto>>(){}.getType());
+        return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType());
+    }
+
+    @Override
+    public List<ArticleResponseDto> findRecommendedArticles(Integer page, Integer size) {
+
+        List<Article> articles = articleRepository.findRecommendedArticles(PageRequest.of(page,size)).getContent();
+        return modelMapper.map(articles , new TypeToken<List<ArticleResponseDto>>(){}.getType());
+
     }
 
 }
