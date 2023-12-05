@@ -20,4 +20,5 @@ public interface CategoryRepository extends JpaRepository<Category , UUID> {
     List<Category> findAllVisible();
     @Query(value = "from category c where c.visible = false ")
     List<Category> findAllUnVisible();
+    void deleteById(UUID id);
 }
