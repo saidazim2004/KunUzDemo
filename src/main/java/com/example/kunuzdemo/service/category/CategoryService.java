@@ -17,4 +17,6 @@ public interface CategoryService {
     List<CategoryResponseDTO> getAll();
 
     List<CategoryResponseDTO> getAllVisible();
+
+    List<CategoryResponseDTO> getAllUnVisible();
 }
