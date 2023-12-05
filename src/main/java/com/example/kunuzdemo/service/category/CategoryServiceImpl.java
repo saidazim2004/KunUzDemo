@@ -42,11 +42,20 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponseDTO getById(UUID categoryID) {
         return modelMapper.map(getCategoryById(categoryID) , CategoryResponseDTO.class);
     }
+
+
     @Override
     public List<CategoryResponseDTO> getAll() {
         List<Category> categories = categoryRepository.findAll();
-        return modelMapper.map(categories , new TypeToken<CategoryResponseDTO>(){}.getType());
+        return modelMapper.map(categories , new TypeToken<List<CategoryResponseDTO>>(){}.getType());
 
     }
 
+
+
+    @Override
+    public List<CategoryResponseDTO> getAllVisible() {
+        List<Category> categoryList = categoryRepository.findAllVisible();
+        return modelMapper.map(categoryList, new TypeToken<List<CategoryResponseDTO>>() {}.getType());
+    }
 }

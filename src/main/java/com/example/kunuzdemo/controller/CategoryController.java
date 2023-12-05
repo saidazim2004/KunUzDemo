@@ -43,5 +43,12 @@ public class CategoryController {
 
 
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @GetMapping("/get-all-visible")
+    public ResponseEntity<List<CategoryResponseDTO>> getAllVisible() {
+        return ResponseEntity.ok(categoryService.getAllVisible());
+    }
+
+
 
 }

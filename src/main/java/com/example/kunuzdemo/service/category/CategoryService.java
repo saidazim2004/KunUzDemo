@@ -15,4 +15,6 @@ public interface CategoryService {
     CategoryResponseDTO getById(UUID categoryID);
 
     List<CategoryResponseDTO> getAll();
+
+    List<CategoryResponseDTO> getAllVisible();
 }
