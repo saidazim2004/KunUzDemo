@@ -52,6 +52,7 @@ public class SecurityConfiguration {
             "api/v1/article/get-by-id",
             "api/v1/article/get-by-language",
             "api/v1/article/get-by-title",
+            "api/v1/region/get-by-id",
             "/v3/api-docs/**",
             "/v3/api-docs.yml",
             "/swagger-ui/**",

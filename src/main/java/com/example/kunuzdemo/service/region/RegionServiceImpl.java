@@ -17,6 +17,7 @@ public class RegionServiceImpl implements RegionService{
     private final RegionRepository regionRepository ;
     private final ModelMapper modelMapper ;
 
+
     @Override
     public RegionResponseDTO create(RegionCreateDTO dto) {
         Region mappedRegion = modelMapper.map(dto, Region.class);
@@ -32,5 +33,13 @@ public class RegionServiceImpl implements RegionService{
         return regionRepository.findRegionById(regionID).orElseThrow(
                 () -> new DataNotFoundException("Region not found with ID: " + regionID)
         );
+    }
+
+
+    @Override
+    public RegionResponseDTO getById(UUID regionId) {
+        Region regionByID = getRegionByID(regionId);
+
+        return modelMapper.map(regionByID, RegionResponseDTO.class);
     }
 }

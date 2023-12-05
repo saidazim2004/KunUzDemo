@@ -10,4 +10,6 @@ public interface RegionService {
     Region getRegion(UUID regionID);
 
     RegionResponseDTO create(RegionCreateDTO createDTO);
+
+    RegionResponseDTO getById(UUID regionId);
 }
