@@ -8,10 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/category")
@@ -24,5 +23,12 @@ public class CategoryController {
     public ResponseEntity<CategoryResponseDTO> create(@Valid @RequestBody CategoryCreateDTO dto) {
         CategoryResponseDTO categoryResponseDTO = categoryService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponseDTO);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @GetMapping("/get-by-id{categoryID}")
+    public ResponseEntity<CategoryResponseDTO> getById(@PathVariable UUID categoryID){
+        CategoryResponseDTO categoryResponseDTO = categoryService.getById(categoryID);
+        return ResponseEntity.ok(categoryResponseDTO);
     }
 }

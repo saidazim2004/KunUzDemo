@@ -10,4 +10,7 @@ public interface CategoryService {
     Category getCategory(UUID categoryID);
 
     CategoryResponseDTO create(CategoryCreateDTO dto);
+
+    CategoryResponseDTO getById(UUID categoryID);
+
 }

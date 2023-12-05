@@ -17,6 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository ;
     private final ModelMapper modelMapper ;
 
+
     @Override
     public CategoryResponseDTO create(CategoryCreateDTO dto) {
         Category category = modelMapper.map(dto, Category.class);
@@ -32,5 +33,10 @@ public class CategoryServiceImpl implements CategoryService {
     private Category getCategoryById(UUID categoryId) {
         return categoryRepository.findCategoryById(categoryId).orElseThrow(
                 () -> new DataNotFoundException("category not found with ID :" + categoryId));
+    }
+
+    @Override
+    public CategoryResponseDTO getById(UUID categoryID) {
+        return modelMapper.map(getCategoryById(categoryID) , CategoryResponseDTO.class);
     }
 }
