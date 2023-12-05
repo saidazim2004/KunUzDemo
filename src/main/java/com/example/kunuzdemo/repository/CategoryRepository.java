@@ -16,6 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category , UUID> {
     Optional<Category> findCategoryById(@Param("categoryID") UUID categoryID);
 
 
-    @Query(value = "from category c where c.visible = true")
+    @Query(value = "from category c where c.visible = true ")
     List<Category> findAllVisible();
+    @Query(value = "from category c where c.visible = false ")
+    List<Category> findAllUnVisible();
 }

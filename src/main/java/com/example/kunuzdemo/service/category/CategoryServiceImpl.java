@@ -53,9 +53,16 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 
+
     @Override
     public List<CategoryResponseDTO> getAllVisible() {
         List<Category> categoryList = categoryRepository.findAllVisible();
+        return modelMapper.map(categoryList, new TypeToken<List<CategoryResponseDTO>>() {}.getType());
+    }
+
+    @Override
+    public List<CategoryResponseDTO> getAllUnVisible() {
+        List<Category> categoryList = categoryRepository.findAllUnVisible();
         return modelMapper.map(categoryList, new TypeToken<List<CategoryResponseDTO>>() {}.getType());
     }
 }

@@ -51,4 +51,11 @@ public class CategoryController {
 
 
 
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @GetMapping("/get-all-un-visible")
+    public ResponseEntity<List<CategoryResponseDTO>> getAllUnVisible() {
+        return ResponseEntity.ok(categoryService.getAllUnVisible());
+    }
+
 }
