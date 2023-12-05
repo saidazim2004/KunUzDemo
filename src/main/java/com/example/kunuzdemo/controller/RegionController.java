@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,5 +33,13 @@ public class RegionController {
     public ResponseEntity<RegionResponseDTO> getByID(@RequestParam UUID regionId){
         RegionResponseDTO regionResponseDTO = regionService.getById(regionId);
         return ResponseEntity.ok(regionResponseDTO);
+    }
+
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<RegionResponseDTO>> getAll(){
+        List<RegionResponseDTO> regionResponseDTOS = regionService.getAll();
+
+        return ResponseEntity.ok(regionResponseDTOS);
     }
 }

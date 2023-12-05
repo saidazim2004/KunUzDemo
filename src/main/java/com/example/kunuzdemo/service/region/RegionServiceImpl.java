@@ -7,8 +7,10 @@ import com.example.kunuzdemo.exceptions.DataNotFoundException;
 import com.example.kunuzdemo.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,10 +38,17 @@ public class RegionServiceImpl implements RegionService{
     }
 
 
+
     @Override
     public RegionResponseDTO getById(UUID regionId) {
         Region regionByID = getRegionByID(regionId);
 
         return modelMapper.map(regionByID, RegionResponseDTO.class);
+    }
+
+
+    @Override
+    public List<RegionResponseDTO> getAll() {
+        return modelMapper.map(regionRepository.findAll() , new TypeToken<List<RegionResponseDTO>>(){}.getType());
     }
 }
