@@ -69,6 +69,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
+
+
     @Override
     public void deleteById(UUID categoryId) {
         System.out.println(categoryId+"netdan keirib kevoti");
@@ -76,17 +78,16 @@ public class CategoryServiceImpl implements CategoryService {
         System.out.println("categoryId = " + byId.get().getId());
         if (byId.isEmpty()){
             throw new DataNotFoundException("category not found with ID :" + categoryId);
-
-
         }
         else {
             categoryRepository.deleteById(categoryId);
 
-
         }
-
-
-
-
+    }
+    @Override
+    public void deleteSelectedCategories(List<UUID> categoryIDs) {
+        for (UUID categoryID : categoryIDs) {
+            deleteById(categoryID);
+        }
     }
 }

@@ -22,4 +22,6 @@ public interface CategoryService {
 
     void deleteById(UUID categoryId);
 
+    void deleteSelectedCategories(List<UUID> categoryIDs);
+
 }

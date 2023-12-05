@@ -66,4 +66,13 @@ public class CategoryController {
 
 
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("/all-selected")
+    public ResponseEntity<String> deleteSelectedCategories(
+            @RequestParam List<UUID> categoryIDs
+    ) {
+        categoryService.deleteSelectedCategories(categoryIDs);
+        return ResponseEntity.ok("Successfully deleted!");
+    }
+
 }
