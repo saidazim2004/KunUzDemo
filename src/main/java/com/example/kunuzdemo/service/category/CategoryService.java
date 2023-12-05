@@ -19,4 +19,7 @@ public interface CategoryService {
     List<CategoryResponseDTO> getAllVisible();
 
     List<CategoryResponseDTO> getAllUnVisible();
+
+    void deleteById(UUID categoryId);
+
 }

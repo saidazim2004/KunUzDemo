@@ -11,6 +11,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -60,9 +61,32 @@ public class CategoryServiceImpl implements CategoryService {
         return modelMapper.map(categoryList, new TypeToken<List<CategoryResponseDTO>>() {}.getType());
     }
 
+
     @Override
     public List<CategoryResponseDTO> getAllUnVisible() {
         List<Category> categoryList = categoryRepository.findAllUnVisible();
         return modelMapper.map(categoryList, new TypeToken<List<CategoryResponseDTO>>() {}.getType());
+    }
+
+
+    @Override
+    public void deleteById(UUID categoryId) {
+        System.out.println(categoryId+"netdan keirib kevoti");
+        Optional<Category> byId = categoryRepository.findById(categoryId);
+        System.out.println("categoryId = " + byId.get().getId());
+        if (byId.isEmpty()){
+            throw new DataNotFoundException("category not found with ID :" + categoryId);
+
+
+        }
+        else {
+            categoryRepository.deleteById(categoryId);
+
+
+        }
+
+
+
+
     }
 }
