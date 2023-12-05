@@ -7,8 +7,10 @@ import com.example.kunuzdemo.exceptions.DataNotFoundException;
 import com.example.kunuzdemo.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,8 +37,16 @@ public class CategoryServiceImpl implements CategoryService {
                 () -> new DataNotFoundException("category not found with ID :" + categoryId));
     }
 
+
     @Override
     public CategoryResponseDTO getById(UUID categoryID) {
         return modelMapper.map(getCategoryById(categoryID) , CategoryResponseDTO.class);
     }
+    @Override
+    public List<CategoryResponseDTO> getAll() {
+        List<Category> categories = categoryRepository.findAll();
+        return modelMapper.map(categories , new TypeToken<CategoryResponseDTO>(){}.getType());
+
+    }
+
 }

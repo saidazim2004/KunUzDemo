@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,9 +27,21 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    @GetMapping("/get-by-id{categoryID}")
-    public ResponseEntity<CategoryResponseDTO> getById(@PathVariable UUID categoryID){
+    @GetMapping("/get-by-id")
+    public ResponseEntity<CategoryResponseDTO> getById(@RequestParam UUID categoryID){
+        System.out.println(categoryID);
         CategoryResponseDTO categoryResponseDTO = categoryService.getById(categoryID);
         return ResponseEntity.ok(categoryResponseDTO);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CategoryResponseDTO>> getAll(){
+        List<CategoryResponseDTO> categoryResponseDTOS = categoryService.getAll();
+        return ResponseEntity.ok(categoryResponseDTOS);
+    }
+
+
+
+
 }

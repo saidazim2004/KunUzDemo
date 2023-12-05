@@ -4,6 +4,7 @@ import com.example.kunuzdemo.dtos.request.CategoryCreateDTO;
 import com.example.kunuzdemo.dtos.response.CategoryResponseDTO;
 import com.example.kunuzdemo.entity.Category;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface CategoryService {
@@ -13,4 +14,5 @@ public interface CategoryService {
 
     CategoryResponseDTO getById(UUID categoryID);
 
+    List<CategoryResponseDTO> getAll();
 }
