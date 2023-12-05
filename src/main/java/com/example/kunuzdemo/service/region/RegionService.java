@@ -4,6 +4,7 @@ import com.example.kunuzdemo.dtos.request.RegionCreateDTO;
 import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.entity.Region;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface RegionService {
@@ -12,4 +13,8 @@ public interface RegionService {
     RegionResponseDTO create(RegionCreateDTO createDTO);
 
     RegionResponseDTO getById(UUID regionId);
+
+    List<RegionResponseDTO> getAll();
+
+
 }
