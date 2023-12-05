@@ -1,6 +1,8 @@
 package com.example.kunuzdemo.controller;
 
 import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
+import com.example.kunuzdemo.dtos.request.ArticleUpdateDTO;
+
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
 import com.example.kunuzdemo.service.article.ArticleService;
 
@@ -100,6 +102,46 @@ public class ArticleController {
         System.out.println("REGION ID "+regionID);
         List<ArticleResponseDto> byRegionId = articleService.getByRegionId(regionID, page, size);
         return ResponseEntity.ok(byRegionId);
+    }
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @GetMapping("/get-latest-news")
+    public ResponseEntity<List<ArticleResponseDto>> getLatestNews(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "5") Integer size
+    ) {
+        return ResponseEntity.ok(articleService.getLatestNews(page, size));
+    }
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @PutMapping("/{articleID}")
+    public ResponseEntity<ArticleResponseDto> updateById(
+            @PathVariable UUID articleID,
+            @RequestBody @Valid ArticleUpdateDTO updateDTO
+    ) {
+        return ResponseEntity.ok(articleService.updateById(articleID, updateDTO));
+    }
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @DeleteMapping("/{articleID}")
+    public ResponseEntity<String> deleteById(
+            @PathVariable UUID articleID
+    ) {
+        return ResponseEntity.ok(articleService.deleteById(articleID));
+    }
+
+
+
+
+
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    @DeleteMapping("/delete-selected")
+    public ResponseEntity<String> deleteSelected(
+            @RequestParam List<UUID> articleIDs
+    ) {
+        return ResponseEntity.ok(articleService.deleteSelected(articleIDs));
     }
 
 }

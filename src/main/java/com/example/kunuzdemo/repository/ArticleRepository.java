@@ -45,4 +45,7 @@ public interface ArticleRepository extends JpaRepository<Article , UUID> {
     @Query(value = "from article a where not a.deleted and a.region.id =:regionID and a.region.visible = true ")
     Page<Article> findArticleByRegion(@Param("regionID")UUID regionID, Pageable pageable);
 
+    @Query(value = "from article a where not a.deleted")
+    Page<Article> findLatestNews(Pageable pageable);
+
 }

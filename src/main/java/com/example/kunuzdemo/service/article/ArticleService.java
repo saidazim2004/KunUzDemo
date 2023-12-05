@@ -1,6 +1,7 @@
 package com.example.kunuzdemo.service.article;
 
 import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
+import com.example.kunuzdemo.dtos.request.ArticleUpdateDTO;
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
 
 import java.util.List;
@@ -25,4 +26,14 @@ public interface ArticleService {
     List<ArticleResponseDto> getAllBlocked(Integer page, Integer size);
 
     List<ArticleResponseDto> getByRegionId(UUID regionID, Integer page, Integer size);
+
+    List<ArticleResponseDto> getLatestNews(Integer page, Integer size);
+
+    ArticleResponseDto updateById(UUID articleID, ArticleUpdateDTO updateDTO);
+
+    String deleteById(UUID articleID);
+
+    String deleteSelected(List<UUID> articleIDs);
+
+
 }
