@@ -1,6 +1,7 @@
 package com.example.kunuzdemo.service.article;
 
 import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
+import com.example.kunuzdemo.dtos.request.ArticleUpdateDTO;
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
 import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.entity.*;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -131,8 +133,58 @@ public class ArticleServiceImpl implements ArticleService {
                 new TypeToken<List<ArticleResponseDto>>() {}.getType());
     }
 
+
     @Override
     public List<ArticleResponseDto> getByRegionId(UUID regionID, Integer page, Integer size) {
         return  modelMapper.map(articleRepository.findArticleByRegion(regionID , PageRequest.of(page,size)).getContent() , new TypeToken<List<ArticleResponseDto>>(){}.getType());
+    }
+
+
+    @Override
+    public List<ArticleResponseDto> getLatestNews(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publishedDate");
+        return modelMapper.map(articleRepository.findLatestNews(PageRequest.of(page, size, sort)).getContent(),
+                new TypeToken<List<ArticleResponseDto>>() {}.getType());
+    }
+
+
+
+    @Override
+    public ArticleResponseDto updateById(UUID articleID, ArticleUpdateDTO updateDTO) {
+        Optional<Article> articleById = articleRepository.getArticleById(articleID);
+        Article article = articleById.get();
+        Media media = mediaService.getMediaById(updateDTO.getMediaID());
+        System.out.println();
+        if(!media.isDeleted()) {
+            try {
+                article.setLanguage(Language.valueOf(updateDTO.getLanguage()));
+                article.setTitle(updateDTO.getTitle());
+                article.setDescription(updateDTO.getDescription());
+                article.setCategory(categoryService.getCategory(updateDTO.getCategoryID()));
+                article.setRegion(regionService.getRegion(updateDTO.getReginID()));
+                article.setMedia(media);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Enum type not valid: " + updateDTO.getLanguage());
+            }
+        }
+        return modelMapper.map(articleRepository.save(article), ArticleResponseDto.class);
+    }
+
+
+    @Override
+    public String deleteById(UUID articleID) {
+        Optional<Article> articleById = articleRepository.getArticleById(articleID);
+        Article article = articleById.get();
+        article.setDeleted(true);
+        articleRepository.save(article);
+        return "Successfully deleted!";
+    }
+
+    @Override
+    public String deleteSelected(List<UUID> articleIDs) {
+        for (UUID articleID : articleIDs) {
+            deleteById(articleID);
+        }
+        return "Successfully deleted!";
     }
 }

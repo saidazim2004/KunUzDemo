@@ -5,14 +5,14 @@ import com.example.kunuzdemo.entity.Article;
 import com.example.kunuzdemo.enums.Language;
 import org.springframework.data.domain.Page;
 
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-import java.net.ContentHandler;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,5 +44,8 @@ public interface ArticleRepository extends JpaRepository<Article , UUID> {
 
     @Query(value = "from article a where not a.deleted and a.region.id =:regionID and a.region.visible = true ")
     Page<Article> findArticleByRegion(@Param("regionID")UUID regionID, Pageable pageable);
+
+    @Query(value = "from article a where not a.deleted")
+    Page<Article> findLatestNews(Pageable pageable);
 
 }
