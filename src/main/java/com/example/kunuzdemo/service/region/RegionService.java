@@ -1,6 +1,7 @@
 package com.example.kunuzdemo.service.region;
 
 import com.example.kunuzdemo.dtos.request.RegionCreateDTO;
+import com.example.kunuzdemo.dtos.request.RegionUpdateDto;
 import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.entity.Region;
 
@@ -16,5 +17,16 @@ public interface RegionService {
 
     List<RegionResponseDTO> getAll();
 
+
+    List<RegionResponseDTO> getAllVisible();
+
+
+    List<RegionResponseDTO> getAllUnVisible();
+
+    RegionResponseDTO update(UUID regionID, RegionUpdateDto updateDTO);
+
+    void deleteByID(UUID regionID);
+
+    void deleteSelectedRegions(List<UUID> regionIDs);
 
 }

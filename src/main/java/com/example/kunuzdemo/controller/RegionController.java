@@ -1,9 +1,11 @@
 package com.example.kunuzdemo.controller;
 
 import com.example.kunuzdemo.dtos.request.RegionCreateDTO;
+import com.example.kunuzdemo.dtos.request.RegionUpdateDto;
 import com.example.kunuzdemo.dtos.response.RegionResponseDTO;
 import com.example.kunuzdemo.service.region.RegionService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +43,51 @@ public class RegionController {
         List<RegionResponseDTO> regionResponseDTOS = regionService.getAll();
 
         return ResponseEntity.ok(regionResponseDTOS);
+    }
+
+
+    @GetMapping("/getAllVisible")
+    public ResponseEntity<List<RegionResponseDTO>> getAllVisible(){
+        List<RegionResponseDTO> regionResponseDTOS = regionService.getAllVisible();
+
+        return ResponseEntity.ok(regionResponseDTOS);
+    }
+
+    @GetMapping("/getAllUnVisible")
+    public ResponseEntity<List<RegionResponseDTO>> getAllUnVisible(){
+        List<RegionResponseDTO> regionResponseDTOS = regionService.getAllUnVisible();
+
+        return ResponseEntity.ok(regionResponseDTOS);
+    }
+
+
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/{regionID}")
+    public ResponseEntity<RegionResponseDTO> update(
+            @PathVariable @NotNull UUID regionID,
+            @Valid @RequestBody RegionUpdateDto updateDTO
+    ) {
+        return ResponseEntity.ok(regionService.update(regionID, updateDTO));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{regionID}")
+    public ResponseEntity<String> delete(
+            @PathVariable @NotNull UUID regionID
+    ) {
+        regionService.deleteByID(regionID);
+        return ResponseEntity.ok("Successfully deleted!");
+    }
+
+
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("/all-selected")
+    public ResponseEntity<String> deleteSelectedRegions(
+            @RequestBody @Valid List<UUID> regionIDs
+    ) {
+        regionService.deleteSelectedRegions(regionIDs);
+        return ResponseEntity.ok("Successfully deleted!");
     }
 }
