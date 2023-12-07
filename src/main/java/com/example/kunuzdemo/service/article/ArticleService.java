@@ -3,6 +3,7 @@ package com.example.kunuzdemo.service.article;
 import com.example.kunuzdemo.dtos.request.ArticleCreateDto;
 import com.example.kunuzdemo.dtos.request.ArticleUpdateDTO;
 import com.example.kunuzdemo.dtos.response.ArticleResponseDto;
+import com.example.kunuzdemo.entity.Article;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,5 +36,6 @@ public interface ArticleService {
 
     String deleteSelected(List<UUID> articleIDs);
 
+    Article findById(UUID id);
 
 }

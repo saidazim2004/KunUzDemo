@@ -180,11 +180,18 @@ public class ArticleServiceImpl implements ArticleService {
         return "Successfully deleted!";
     }
 
+
+
     @Override
     public String deleteSelected(List<UUID> articleIDs) {
         for (UUID articleID : articleIDs) {
             deleteById(articleID);
         }
         return "Successfully deleted!";
+    }
+
+    @Override
+    public Article findById(UUID id) {
+        return articleRepository.findById(id).get();
     }
 }
