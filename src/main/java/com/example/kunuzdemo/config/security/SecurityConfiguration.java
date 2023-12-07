@@ -53,6 +53,7 @@ public class SecurityConfiguration {
             "api/v1/article/get-by-language",
             "api/v1/article/get-by-title",
             "api/v1/region/get-by-id",
+            "api/v1/attachment/upload",
             "api/v1/region/getAll",
             "api/v1/comment/create",
             "api/v1/like/create",
