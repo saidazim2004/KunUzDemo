@@ -10,7 +10,7 @@ import com.example.kunuzdemo.enums.Language;
 import com.example.kunuzdemo.exceptions.DataNotFoundException;
 import com.example.kunuzdemo.repository.ArticleRepository;
 import com.example.kunuzdemo.service.category.CategoryService;
-import com.example.kunuzdemo.service.media.MediaService;
+import com.example.kunuzdemo.service.media.MediaServiceImpl;
 import com.example.kunuzdemo.service.region.RegionService;
 import com.example.kunuzdemo.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ModelMapper modelMapper ;
     private final RegionService regionService ;
     private final CategoryService categoryService ;
-    private final MediaService mediaService ;
+    private final MediaServiceImpl mediaService ;
     private final ArticleRepository articleRepository ;
 
 
